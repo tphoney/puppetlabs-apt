@@ -1,0 +1,10 @@
+{
+  "description": "Shows the config of apt",
+  "input_method": "stdin",
+  "parameters": {
+    "action": {
+      "description": "Action to perform ",
+      "type": "Optional[String]"
+    }
+  }
+}
