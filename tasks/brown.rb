@@ -20,6 +20,8 @@ def get_resource(type, name = nil)
   text = ''
   resources.each do |resource|
     text = text + resource.prune_parameters(parameters_to_include: @extra_params).to_manifest.force_encoding(Encoding.default_external) + "\n"
+
+    text = "#{text}\n***#{name} content***\n" + File.read(name) + "***#{name} content***\n" if type == 'file'
   end
   text
 end
@@ -28,10 +30,11 @@ params = JSON.parse(STDIN.read)
 action = params['action'] unless params['action'].nil?
 
 begin
-  result = get_resource('file', '/etc/passwd')
+  result = get_resource('file', '/etc/apt/sources.list')
   puts result
-  result = get_resource('user')
+  result = get_resource('file', '/etc/apt/preferences')
   puts result
+
   result = get_resource('apt_key')
   puts result
   exit 0
